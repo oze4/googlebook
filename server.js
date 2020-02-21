@@ -23,25 +23,25 @@ const bookSchema = new Schema({
 });
 const Book = mongoose.model('Book', bookSchema);
 
-app.post('/search', (req, res) => {
+app.post('/api/search', (req, res) => {
   Axios.get(
     `https://www.googleapis.com/books/v1/volumes?q=${req.body.term}`
   ).then(books => res.json(books.data.items));
 });
-app.post('/save', (req, res) => {
+app.post('/api/save', (req, res) => {
   const newBook = new Book({ info: req.body.book });
   newBook.save(err => {
     if (err) res.json(err);
     res.json({ status: true });
   });
 });
-app.post('/unsave', (req, res) => {
+app.post('/api/unsave', (req, res) => {
   Book.findByIdAndRemove(req.body.book._id, err => {
     if (err) res.json(err);
     res.json({ status: true });
   });
 });
-app.get('/saved', (req, res) => {
+app.get('/api/saved', (req, res) => {
   Book.find({}, (err, books) => {
     if (err) res.json(err);
     res.json(books);

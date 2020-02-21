@@ -14,7 +14,7 @@ function App() {
     results: []
   });
   useEffect(() => {
-    Axios.post(`/search`,
+    Axios.post(`/api/search`,
       {
         term: search.term
       }
