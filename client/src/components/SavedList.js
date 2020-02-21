@@ -5,7 +5,7 @@ import BookCard from './BookCard';
 const SavedList = () => {
     const [saved, setSaved] = useState([]);
     useEffect(() => {
-        Axios.get('/api/saved')
+        Axios.get('/saved')
         .then(res => setSaved(res.data))
     }, []);
     const list = saved.map(res => (

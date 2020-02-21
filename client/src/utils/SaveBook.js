@@ -1,7 +1,7 @@
 import Axios from "axios"
 
 const SaveBook = (book) => {
-    Axios.post('/api/save', {book})
+    Axios.post('/save', {book})
     .then(res => res)
 }
 
