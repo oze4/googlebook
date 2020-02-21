@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const Axios = require('axios');
 const mongoose = require('mongoose');
-// require('dotenv').config();
+require('dotenv').config();
 
 const PORT = process.env.PORT || 3001;
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/book';
@@ -47,7 +47,7 @@ app.get('/api/saved', (req, res) => {
     res.json(books);
   });
 });
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, './client/build/index.html'));
 });
 
