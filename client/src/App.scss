@@ -1,0 +1,84 @@
+.app {
+    padding: 20px;
+    min-height: calc(100vh + 200px);
+    background: #ddd;
+    padding-bottom: 200px;
+}
+
+header {
+    padding: 20px;
+    text-align: center;
+}
+
+.searchbar {
+    text-align: center;
+    input {
+        padding: 10px;
+        width: 100%;
+        max-width: 600px;
+        border: 2px solid #000;
+        border-radius: 5px;
+        font-size: 1.2rem;
+    }
+}
+
+.message {
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer {
+    position: fixed;
+    background: black;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    a {
+        color: white;
+        margin: 0 20px;
+    }
+}
+
+.book-card {
+    display: flex;
+    border: 2px solid black;
+    margin: 10px auto;
+    border-radius: 5px;
+    background: white;
+    .left {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+    }
+    .right {
+        padding: 10px;
+    }
+
+    a {
+        color: black;
+    }
+    .authors {
+        font-style: italic;
+    }
+    button {
+        border: 2px solid black;
+        border-radius: 5px;
+        background: black;
+        color: white;
+        padding: 5px 10px;
+        margin-left: 10px;
+    }
+}
+
+.search-list,
+.saved-list {
+    max-width: 800px;
+    margin: 0px auto;
+}
+.title {
+    text-align: center;
+}
