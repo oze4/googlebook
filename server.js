@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const Axios = require('axios');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -11,7 +12,7 @@ const app = express();
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(bodyParser.json());
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
@@ -22,10 +23,6 @@ const bookSchema = new Schema({
   info: Schema.Types.Mixed,
 });
 const Book = mongoose.model('Book', bookSchema);
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './client/build/index.html'));
-});
 
 app.post('/api/search', (req, res) => {
   Axios.get(
@@ -50,6 +47,9 @@ app.get('/api/saved', (req, res) => {
     if (err) res.json(err);
     res.json(books);
   });
+});
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './client/build/index.html'));
 });
 
 mongoose.connect(mongoUri, { useNewUrlParser: true });
