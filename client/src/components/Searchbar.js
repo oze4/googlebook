@@ -1,7 +1,7 @@
 import React from 'react'
 import {DebounceInput} from 'react-debounce-input';
 
-const Searchbar = ({search, setSearch}) => {
+const Searchbar = ({/* search, */ setSearch}) => { // <-- No need for search param here
     return (
         <form action="#" method="get" className="searchbar" onSubmit={e => e.preventDefault()}>
             <DebounceInput
@@ -9,7 +9,7 @@ const Searchbar = ({search, setSearch}) => {
                 debounceTimeout={300}
                 type="search" 
                 placeholder="🔎 search..."
-                onChange={(e) => setSearch({...search, term: e.target.value})}
+                onChange={(e) => setSearch(e.target.value)}
             />
         </form>
     )

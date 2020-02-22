@@ -9,30 +9,41 @@ import Axios from 'axios';
 import SavedList from './components/SavedList';
 
 function App() {
+  /**
+   * Separated your state into 2 different variables.
+   * Your request loop was happening due to how your 
+   * useEffect was configured (specifically the dependency 
+   * array)
+   */
+  const [searchTerm, setSearchTerm] = useState();
+  const [searchResults, setSearchResults] = useState();
+
+  /*
   const [search, setSearch] = useState({
     term: '',
     results: []
   });
+  */
+
   useEffect(() => {
-    Axios.post(`/api/search`,
-      {
-        term: search.term
-      }
-    )
-    .then(books => setSearch({...search, results: books.data}));
-  }, [search.term]);
+    Axios.post(`/api/search`, { term: searchTerm /* search.term */ })
+    .then(books => {
+      setSearchResults(books.data);
+      // setSearch({...search, results: books.data})
+    });
+  }, [searchTerm]);
 
   return (
     <div className="app">
       <Header />
       <Router>
         <Route exact path='/'>
-          <Searchbar search={search} setSearch={setSearch} />
-          {!search.term ? (
+          <Searchbar /* search={search} <-- No need for this param */ setSearch={setSearchTerm} /> 
+          {!searchTerm /* search.term */ ? (
             <div className="message">
               <p>Search for a book or whatever</p>
             </div>
-          ) : <SearchList results={search.results} />}
+          ) : <SearchList results={searchResults/* search.results */} />}
         </Route>
         <Route path='/saved'>
           <h2 className="title">Saved Books</h2>
