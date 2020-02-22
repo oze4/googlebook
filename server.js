@@ -23,6 +23,10 @@ const bookSchema = new Schema({
 });
 const Book = mongoose.model('Book', bookSchema);
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './client/build/index.html'));
+});
+
 app.post('/api/search', (req, res) => {
   Axios.get(
     `https://www.googleapis.com/books/v1/volumes?q=${req.body.term}`
@@ -46,9 +50,6 @@ app.get('/api/saved', (req, res) => {
     if (err) res.json(err);
     res.json(books);
   });
-});
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './client/build/index.html'));
 });
 
 mongoose.connect(mongoUri, { useNewUrlParser: true });
