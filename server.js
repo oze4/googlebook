@@ -33,11 +33,16 @@ app.post('/api/search', (req, res) => {
 });
 
 app.post('/api/save', (req, res) => {
-  const newBook = new Book({ info: req.body.book });
-  newBook.save(err => {
-    if (err) res.json(err);
-    res.json({ status: true });
-  });
+  console.log('got request');
+  try {
+    const newBook = new Book({ info: req.body.book });
+    newBook.save(err => {
+      if (err) res.json(err);
+      res.json({ status: true });
+    });
+  } catch (err) {
+    res.status(200).send({ error: err });
+  }
 });
 
 app.post('/api/unsave', (req, res) => {
@@ -48,21 +53,35 @@ app.post('/api/unsave', (req, res) => {
 });
 
 app.get('/api/saved', (req, res) => {
-  Book.find({}, (err, books) => {
-    if (err) res.json(err);
-    res.json(books);
-  });
+  console.log("in /api/saved");
+  try {
+    Book.find({}, (err, books) => {
+      if (err) res.json(err);
+      res.json(books);
+    });
+  } catch (err) {
+    res.status(200).send({ error: err });
+  }
 });
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './client/build/index.html'));
 });
 
-mongoose.connect(mongoUri, { useNewUrlParser: true });
+mongoose.connect(mongoUri, { 
+  useNewUrlParser: true ,
+  useUnifiedTopology: true,  // Added to get rid of deprecation warnings
+  useFindAndModify: false    // Added to get rid of deprecation warnings
+});
+
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
+
+db.on('error', /* console.error.bind(console, 'connection error:') */ error => {
+  console.log("[MONGOOSE][ERROR]", error);
+});
+
 db.once('open', function() {
-  console.log('connected');
+  console.log('[MONGOOSE][SUCCESS] Connected to database!');
 });
 
 app.listen(PORT, () => {
