@@ -25,6 +25,7 @@ const bookSchema = new Schema({
 const Book = mongoose.model('Book', bookSchema);
 
 app.post('/api/search', (req, res) => {
+  console.log('actually hit the route');
   Axios.get(
     `https://www.googleapis.com/books/v1/volumes?q=${req.body.term}`
   ).then(books => res.json(books.data.items));
