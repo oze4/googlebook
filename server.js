@@ -10,15 +10,6 @@ require('dotenv').config();
 const PORT = process.env.PORT || 8080;
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/book';
 
-const mongoConfig = {
-  useNewUrlParser: true,
-  ssl: true,
-  replicaSet: '<clusterName>-shard-0',
-  authSource: 'admin',
-  retryWrites: true,
-  useUnifiedTopology: true,
-}
-
 const app = express();
 
 // Define middleware here
