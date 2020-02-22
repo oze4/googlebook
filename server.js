@@ -36,6 +36,8 @@ app.post('/api/search', (req, res) => {
 
 app.post('/api/save', (req, res) => {
   console.log('got request');
+  res.status(200).end();
+  /*
   try {
     const newBook = new Book({ info: req.body.book });
     newBook.save(err => {
@@ -45,6 +47,7 @@ app.post('/api/save', (req, res) => {
   } catch (err) {
     res.status(200).send({ error: err });
   }
+  */
 });
 
 app.post('/api/unsave', (req, res) => {
@@ -76,8 +79,8 @@ app.get('*', (req, res) => {
 
 mongoose.connect(mongoUri, { 
   useNewUrlParser: true ,
-  useUnifiedTopology: true,  // Added to get rid of deprecation warnings
-  useFindAndModify: false    // Added to get rid of deprecation warnings
+  // useUnifiedTopology: true,  // Added to get rid of deprecation warnings
+  // useFindAndModify: false    // Added to get rid of deprecation warnings
 });
 
 const db = mongoose.connection;
