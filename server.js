@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3001;
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/book';
 
 const app = express();
-
+const router = express.Router();
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -23,31 +23,31 @@ const bookSchema = new Schema({
 });
 const Book = mongoose.model('Book', bookSchema);
 
-app.post('/api/search', (req, res) => {
+router.post('/api/search', (req, res) => {
   Axios.get(
     `https://www.googleapis.com/books/v1/volumes?q=${req.body.term}`
   ).then(books => res.json(books.data.items));
 });
-app.post('/api/save', (req, res) => {
+router.post('/api/save', (req, res) => {
   const newBook = new Book({ info: req.body.book });
   newBook.save(err => {
     if (err) res.json(err);
     res.json({ status: true });
   });
 });
-app.post('/api/unsave', (req, res) => {
+router.post('/api/unsave', (req, res) => {
   Book.findByIdAndRemove(req.body.book._id, err => {
     if (err) res.json(err);
     res.json({ status: true });
   });
 });
-app.get('/api/saved', (req, res) => {
+router.get('/api/saved', (req, res) => {
   Book.find({}, (err, books) => {
     if (err) res.json(err);
     res.json(books);
   });
 });
-app.get('*', (req, res) => {
+router.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './client/build/index.html'));
 });
 
