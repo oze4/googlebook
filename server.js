@@ -30,20 +30,20 @@ router.post('/api/search', (req, res) => {
     `https://www.googleapis.com/books/v1/volumes?q=${req.body.term}`
   ).then(books => res.json(books.data.items));
 });
-router.post('/api/save', (req, res) => {
+router.post('/save', (req, res) => {
   const newBook = new Book({ info: req.body.book });
   newBook.save(err => {
     if (err) res.json(err);
     res.json({ status: true });
   });
 });
-router.post('/api/unsave', (req, res) => {
+router.post('/unsave', (req, res) => {
   Book.findByIdAndRemove(req.body.book._id, err => {
     if (err) res.json(err);
     res.json({ status: true });
   });
 });
-router.get('/api/saved', (req, res) => {
+router.get('/saved', (req, res) => {
   Book.find({}, (err, books) => {
     if (err) res.json(err);
     res.json(books);
