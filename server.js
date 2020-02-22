@@ -9,6 +9,8 @@ const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/book';
 
 const app = express();
 const router = express.Router();
+
+app.use('/api', router);
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -47,7 +49,7 @@ router.get('/api/saved', (req, res) => {
     res.json(books);
   });
 });
-router.get('*', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './client/build/index.html'));
 });
 
