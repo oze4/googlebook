@@ -3,10 +3,21 @@ const path = require('path');
 const Axios = require('axios');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const MongoClient = require('mongodb').MongoClient
+
 require('dotenv').config();
 
 const PORT = process.env.PORT || 8080;
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/book';
+
+const mongoConfig = {
+  useNewUrlParser: true,
+  ssl: true,
+  replicaSet: '<clusterName>-shard-0',
+  authSource: 'admin',
+  retryWrites: true,
+  useUnifiedTopology: true,
+}
 
 const app = express();
 
@@ -62,6 +73,10 @@ app.get('/api/saved', (req, res) => {
   } catch (err) {
     res.status(200).send({ error: err });
   }
+});
+
+app.get('/api/test', (req, res) => {
+  res.status(200).send("Got it!");
 });
 
 app.get('*', (req, res) => {
