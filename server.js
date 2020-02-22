@@ -26,7 +26,28 @@ const bookSchema = new Schema({
   info: Schema.Types.Mixed,
 });
 
-const Book = mongoose.model('Book', bookSchema);
+// *** REMOVED THIS ***
+// const Book = mongoose.model('Book', bookSchema);
+
+// ==========================================================
+// **********************************************************
+//          CHANGED THE WAY YOU CONNECT TO MONGO
+// **********************************************************
+// ==========================================================
+/** */ mongoose.set('useCreateIndex', true);
+/** */ 
+/** */ const mongoConnection = mongoose.createConnection(mongoUri, {
+/** */   useUnifiedTopology: true,
+/** */   useNewUrlParser: true,
+/** */   useFindAndModify: false,
+/** */ });
+/** */ 
+/** */ const Book = mongoConnection.model('Book', bookSchema /*, 'COLLECTION_NAME'*/);
+// ==========================================================
+// **********************************************************
+//                      END OF CHANGES
+// **********************************************************
+// ==========================================================
 
 app.post('/api/search', (req, res) => {
   console.log('actually hit the route');
@@ -74,22 +95,6 @@ db.once('open', function() {
   console.log('[MONGOOSE][SUCCESS] Connected to database!');
 });
 */
-
-const connectDB = async (db) => {
-  try {
-    await mongoose.connect(db, {
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-      useFindAndModify: false,
-    });
-    console.log("MongoDB is Connected...");
-  } catch (err) {
-    console.error(err.message);
-    process.exit(1);
-  }
-};
-
-connectDB(mongoUri);
 
 app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
