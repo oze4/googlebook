@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 8080;
-const mongoUri = process.env.MONGODB_URI // || 'mongodb://localhost:27017/book';
+const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/book';
 
 const app = express();
 
