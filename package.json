@@ -24,8 +24,5 @@
         "express": "^4.17.1",
         "mongodb": "^3.5.3",
         "mongoose": "^5.9.1"
-    },
-    "engines": {
-        "node": "13.8.0"
     }
 }
